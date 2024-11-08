@@ -1,0 +1,20 @@
+# STAGE 2: Create a clean production image - only take pruned assets
+FROM node:20.11-alpine as runner
+WORKDIR /app
+ARG SERVICE=farm
+
+
+# We add a non-root user to run the app for security reasons
+RUN addgroup --system --gid 1001 $SERVICE
+RUN adduser --system --uid 1001 $SERVICE
+USER $SERVICE
+
+COPY --chown=$SERVICE:$SERVICE  .next/standalone /app
+COPY --chown=$SERVICE:$SERVICE ./public /app/public
+COPY --chown=$SERVICE:$SERVICE .next/static /app/.next/static
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+CMD HOSTNAME="0.0.0.0" node server.js

@@ -1,0 +1,5 @@
+export { default as IconCoin } from "./coin"
+export { default as IconCart } from "./cart"
+export { default as IconPlay } from "./play"
+export { default as IconQuest } from "./quest"
+export { default as IconRank } from "./rank"
